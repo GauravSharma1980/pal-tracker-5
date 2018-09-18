@@ -1,0 +1,7 @@
+---
+applications:
+- name: test5
+  path: build/libs/pal-tracker.jar
+  random-route: true
+  env:
+    WELCOME_MESSAGE: Hello from GRS
