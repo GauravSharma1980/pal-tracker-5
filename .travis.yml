@@ -31,6 +31,7 @@ jobs:
   - stage: deploy to review
     language: java
     before_install:
+    - chmod +x gradlew
     - wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add -
     - echo "deb https://packages.cloudfoundry.org/debian stable main" | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list
     - sudo apt-get update
@@ -43,12 +44,13 @@ jobs:
     before_deploy:
     - echo "Deploying $RELEASE_TAG to review"
     after_success:
-    - cf login -a $CF_API_URL -u $CF_USERNAME -p $CF_PASSWORD -o $CF_ORG -s review
-    - scripts/migrate-databases.sh pal-tracker .
+    - cf login -a $CF_API_URL -u $CF_USERNAME -p $CF_PASSWORD -o $CF_ORG -s test5  --skip_ssl_validation
+    - scripts/migrate-databases.sh test5 .
     deploy:
       provider: cloudfoundry
       api: $CF_API_URL
       username: $CF_USERNAME
       password: $CF_PASSWORD
       organization: $CF_ORG
-      space: review
+      space: test5
+      skip_ssl_validation: true
