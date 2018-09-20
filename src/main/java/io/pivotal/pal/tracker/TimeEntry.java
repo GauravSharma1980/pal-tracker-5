@@ -1,6 +1,8 @@
 package io.pivotal.pal.tracker;
 
-    public class TimeEntry {
+import java.time.LocalDate;
+
+public class TimeEntry {
         private long id;
         private long projectId;
         private long userId;
